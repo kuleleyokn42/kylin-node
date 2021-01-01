@@ -52,6 +52,9 @@ pub use pallet_template;
 /// Import the contract pallet.
 pub use pallet_contracts;
 
+/// Import data fetcher pallet.
+pub use pallet_data_fetcher;
+
 /// An index to a block.
 pub type BlockNumber = u64;
 
@@ -391,6 +394,14 @@ where
 }
 /*** pallet-ocw end ***/
 
+/*** pallet-data-fetcher start ***/
+impl pallet_data_fetcher::Trait for Runtime {
+    type AuthorityId = pallet_data_fetcher::crypto::DataFetcherAuthId;
+    type Call = Call;
+    type Event = Event;
+}
+/*** pallet-data-fetcher end ***/
+
 // Create the runtime by composing the FRAME pallets that were previously configured.
 construct_runtime!(
     pub enum Runtime where
@@ -410,6 +421,7 @@ construct_runtime!(
         TemplateModule: pallet_template::{Module, Call, Storage, Event<T>},
         PriceFetchModule: pallet_ocw::{Module, Call, Storage, Event<T>},
         Contracts: pallet_contracts::{Module, Call, Config, Storage, Event<T>},
+        DataFetcherModule: pallet_data_fetcher::{Module, Call, Storage, Event<T>},
     }
 );
 
